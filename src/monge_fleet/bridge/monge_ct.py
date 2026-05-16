@@ -24,7 +24,8 @@ import numpy as np
 import math
 from typing import Optional
 
-from ..homothetic import ExternalCenter, homothetic_center
+
+from ..consensus import homothetic_center
 from ..cohomology import MongeCohomology
 from ..consensus import MongeConsensus
 from ..transport.monge_map import consensus_convergence_rate
