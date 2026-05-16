@@ -1,0 +1,13 @@
+[project]
+name = "monge-fleet"
+version = "0.1.0"
+description = "Monge's theorem — fleet mathematics enhancement layer"
+requires-python = ">=3.10"
+dependencies = ["numpy", "scipy"]
+
+[project.optional-dependencies]
+dev = ["pytest", "hypothesis"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
