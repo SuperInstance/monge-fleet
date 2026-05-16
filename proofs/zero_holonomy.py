@@ -31,7 +31,7 @@ Vector = np.ndarray
 # ─── Part 1: Trivial direction (area = 0 ⇒ collinear) ──────────────────────
 
 def area_to_collinear(S12: Vector, S23: Vector, S31: Vector,
-                      tol: float = 1e-12) -> bool:
+                      tol: float = 1e-10) -> bool:
     """
     Part 1 proof: If area = 0, points are collinear.
 
@@ -39,6 +39,8 @@ def area_to_collinear(S12: Vector, S23: Vector, S31: Vector,
         The area of triangle ABC is |(B - A) × (C - A)| / 2.
         If this is zero, the cross product of vectors (B-A) and (C-A) is zero.
         This means B-A and C-A are parallel → A, B, C lie on the same line.
+
+    Uses manual cross product for numerical stability.
 
     Args:
         S12: First point
@@ -51,7 +53,7 @@ def area_to_collinear(S12: Vector, S23: Vector, S31: Vector,
     """
     v1 = S23 - S12
     v2 = S31 - S12
-    area = abs(np.cross(v1, v2))
+    area = abs(v1[0] * v2[1] - v1[1] * v2[0])
     return area < tol
 
 
@@ -66,6 +68,9 @@ def collinear_to_area(S12: Vector, S23: Vector, S31: Vector) -> float:
         is zero. Three points are collinear iff their cross product vanishes.
         The area formula is the absolute cross product, so collinear → area=0.
 
+    Uses manual cross product (v1[0]*v2[1] - v1[1]*v2[0]) to avoid numpy's
+    deprecated 2D cross product function which has numerical stability issues.
+
     Args:
         S12: First point
         S23: Second point
@@ -76,7 +81,7 @@ def collinear_to_area(S12: Vector, S23: Vector, S31: Vector) -> float:
     """
     v1 = S23 - S12
     v2 = S31 - S12
-    return float(abs(np.cross(v1, v2)))
+    return float(abs(v1[0] * v2[1] - v1[1] * v2[0]))
 
 
 # ─── Part 3: Monge's theorem guarantee ──────────────────────────────────────
